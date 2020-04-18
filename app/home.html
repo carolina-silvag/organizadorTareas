@@ -11,7 +11,7 @@
 <body>   
   <section>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-      <a class="navbar-brand" href="#">TAREFA</a>
+      <a class="navbar-brand" href="#">ORGANIZATOR3000</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -22,21 +22,26 @@
             <a class="nav-link" data-toggle="modal" data-target="#exampleModalCenter" id="crearTarea" >Crear Tarea<span class="sr-only">(current)</span></a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Link</a>
+            <a class="nav-link" href="#">Alertas</a>
           </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               Dropdown
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="#">otro</a>
-              <a class="dropdown-item" href="#">otro</a>
+              <a class="dropdown-item" href="#">perfil</a>
+              <a class="dropdown-item" href="#">salir</a>
             </div>
           </li>
         </ul>
-        <form class="form-inline my-2 my-lg-0">
-          <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        <form class="form-inline my-2 my-lg-0 nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Carolina
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="#">pefil</a>
+            <a class="dropdown-item" href="#">salir</a>
+          </div>
         </form>
       </div>
     </nav>
@@ -53,11 +58,35 @@
             </button>
           </div>
           <div class="modal-body">
-            <div style="float: left;margin-top: 5px;"><label style="float: left">Nombre Tarea</label><input type="text" id="txt_nom" class="est1" style="float: left; margin-left: 97px; width: 200px" placeholder="ingrese el nombre de la tarea..."></div>
-            <div style="float: left;margin-top: 5px;"><label style="float: left">Fecha Inicio Tarea</label><input type="date" id="txt_f_ini" class="est1" style="float: left; margin-left: 70px; width: 200px;"></div>
-            <div style="float: left;margin-top: 5px;"><label style="float: left">Fecha Finalizaci&oacute;n Tarea</label><input type="date" id="txt_f_fin" class="est1" style="float: left; margin-left: 29px; width: 200px;"></div>
-            <div style="float: left;margin-top: 5px;"><label style="float: left">Descripci&oacute;n Tarea</label><textarea id="txt_desc" class="est1" style="float: left; margin-left: 72px; width: 200px; height: 60px" placeholder="ingrese sus comentarios"></textarea></div>
-            <div style="float: left;margin-top: 5px;"><label style="float: left">Asignar Tarea</label><select id="select_asigna" style="float: left; margin-left: 97px; width: 200px"><option value="vacio">Seleccione</option><option value="wn1">Miembro1</option><option value="wn2">Miembro2</option></select></div>
+            <form>
+              <div class="form-group">
+                <label for="exampleFormControlInput1">Titulo Tarea</label>
+                <input type="titulo" class="form-control" id="inputTituloTarea" placeholder="nombre tarea">
+              </div>
+              <div class="form-group">
+                <label for="exampleFormControlInput1">Fecha Inicio Tarea</label>
+                <input class="form-control" type="date" id="txt_f_ini">
+              </div>
+              <div class="form-group">
+                <label for="exampleFormControlInput1">Fecha Finalización Tarea</label>
+                <input class="form-control" type="date" id="txt_f_ini">
+              </div>
+              <div class="form-group">
+                <label for="exampleFormControlSelect1">Asignar Tarea</label>
+                <select class="form-control" id="exampleFormControlSelect1">
+                  <option hidden>Seleccione</option>
+                  <option>Carolina</option>
+                  <option>David</option>
+                  <option>Ándres</option>
+                  <option>Paula</option>
+                  <option>Luis</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="exampleFormControlTextarea1">Descripción</label>
+                <textarea class="form-control" id="descripcionTarea" rows="3"></textarea>
+              </div>
+            </form>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
@@ -70,14 +99,14 @@
 
   <section>
     <div class="row">
-      <div class="col-4">
+      <div class="col-4 text-center">
         <h4>Por Hacer</h4>
-        <div id="crearTarea"></div>
+        <div id="crearTarea "></div>
       </div>
-      <div class="col-4">
+      <div class="col-4 text-center">
         <h4>En proceso</h4>
       </div>
-      <div class="col-4">
+      <div class="col-4 text-center">
         <h4>Realizadas</h4>
       </div>
     </div>
