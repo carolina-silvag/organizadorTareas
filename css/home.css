@@ -1,0 +1,12 @@
+html {
+    height:100%;
+    width:100%;
+}
+
+body {
+    background-color: coral;
+}
+.fondo-nav {
+    background-color: antiquewhite;
+    height: 700px;
+}
