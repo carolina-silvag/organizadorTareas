@@ -10,3 +10,8 @@ body {
     background-color: antiquewhite;
     height: 700px;
 }
+
+.container-fluid {
+    height: 100%;
+    background-color: aliceblue;
+}
