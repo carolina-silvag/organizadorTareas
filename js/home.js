@@ -1,15 +1,75 @@
-function iniciarPanelTarea() {
+var numeroTarea;
+var listaTareas = [];
 
+var firebaseConfig = {
+  apiKey: "AIzaSyCqAGpdXW0koh4OYO-JGIgdBbua8NYV_f4",
+  authDomain: "tarefa-c987b.firebaseapp.com",
+  databaseURL: "https://tarefa-c987b.firebaseio.com",
+  projectId: "tarefa-c987b",
+  storageBucket: "tarefa-c987b.appspot.com",
+  messagingSenderId: "1044801539130",
+  appId: "1:1044801539130:web:ba5ebce9ee6ef399df3903",
+  measurementId: "G-G3Z0W83K56"
+};
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+
+firebase.auth().onAuthStateChanged(function(user) {
+  if (user) {
+    // User is signed in.
+    var displayName = user.displayName;
+    var email = user.email;
+    var emailVerified = user.emailVerified;
+    var photoURL = user.photoURL;
+    var isAnonymous = user.isAnonymous;
+    var uid = user.uid;
+    var providerData = user.providerData;
+    // ...
+    // User is signed out.
+    // ...
+  }
+});
+var paneles = firebase.database().ref("/paneles/proyecto_1");
+
+paneles.on('value', function(snapshot){
+  console.log(snapshot.val());
+  iniciarPanelTareas(snapshot);
+});
+
+
+function iniciarPanelTareas(datos) {
+  $("#crearTareaPanel").html("");
+  numeroTarea = datos.numChildren() + 1;
+  if(numeroTarea < 1) {
+    $('#crearTareaPanel').hide()
+  } else {
+    $('#crearTareaPanel').addClass("pizarra")
+    datos.forEach(element => {
+      crearTarjeta(element.val());
+    });
+  }
+}
+
+function crearTarjeta(tarea) {
+  $("#crearTareaPanel").append('<div class="tarea"><p id="tituloEnTarjeta" class="tituloTarjeta"><strong>'+tarea.titulo+'</strong></p><div class="row"><div class="col-4"><p id="fechaEnTarjeta">'+tarea.fecha_inicio+'</p></div><div class="col-4"></div><div class="col-4"><div id="responsableEnTarjeta">'+tarea.asignada+'</div></div></div></div>');
 }
 
 function crearTareaPanel() {
   var database = firebase.database();
-  var docRef = db.collection("paneles");
+  var paneles = firebase.database();
   var userId = firebase.auth().currentUser.uid;
-  database.ref('/paneles').once('value').then(function(snapshot) {
-      console.log('snapshot', snapshot)
-  // ...
+  paneles.ref('/paneles/proyecto_1/tarea'+ numeroTarea).set({
+    asignada: $("#asignado").val(),
+    descripcion: $("#descripcion").val(),
+    fecha_inicio : $("#fecha_inicio").val(),
+    fecha_fin: $("#fecha_fin").val(),
+    titulo: $("#titulo").val()
   });
+
+  $("#modalCrearTarea").modal('toggle');
+
+  
+  
   /*db.collection("paneles").add({
     
     first: "Ada",
@@ -22,8 +82,6 @@ function crearTareaPanel() {
   .catch(function(error) {
       console.error("Error adding document: ", error);
   });*/
-
-    $("#crearTareaPanel").val('Crear Tarea 1 para carolina')
   }
 
 function volverDeAlerta() {

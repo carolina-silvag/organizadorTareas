@@ -19,7 +19,7 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item active">
-            <a class="nav-link" data-toggle="modal" data-target="#exampleModalCenter" id="crearTarea" >Crear Tarea<span class="sr-only">(current)</span></a>
+            <a class="nav-link" data-toggle="modal" data-target="#modalCrearTarea" id="crearTarea" >Crear Tarea<span class="sr-only">(current)</span></a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="./alertas.html">Alertas</a>
@@ -39,7 +39,7 @@
             Carolina
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item" href="#">pefil</a>
+            <a class="dropdown-item" href="./alertas.html">pefil</a>
             <a class="dropdown-item" onclick="salirSesion()">salir</a>
           </div>
         </form>
@@ -48,11 +48,11 @@
   </section>
   <section>
   <!-- Modal -->
-    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal fade" id="modalCrearTarea" tabindex="-1" role="dialog" aria-labelledby="modalCrearTareaTitle" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalCenterTitle">Crear Tarea</h5>
+            <h5 class="modal-title" id="modalCrearTareaTitle">Crear Tarea</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
@@ -96,7 +96,7 @@
     </div>
   </section>
 
-  <section class="container-fluid">
+  <section class="container-fluid section_1">
     <div class="row">
       <div class="col-4 text-center">
         <h4>Por Hacer</h4>
@@ -113,11 +113,16 @@
   <section class="container-fluid">
     <div class="row">
       <div class="col-4 text-center">
-        <div id="crearTareaPanel"></div>
+        <div id="crearTareaPanel">
+        </div>
       </div>
       <div class="col-4 text-center">
+        <div id="tareaPanelEnProceso">
+        </div>
       </div>
       <div class="col-4 text-center">
+        <div id="tareaRealizada">
+        </div>
       </div>
     </div>
   </section>
@@ -131,41 +136,7 @@
   <script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-database.js"></script>
 
   <script>
-    var firebaseConfig = {
-      apiKey: "AIzaSyCqAGpdXW0koh4OYO-JGIgdBbua8NYV_f4",
-      authDomain: "tarefa-c987b.firebaseapp.com",
-      databaseURL: "https://tarefa-c987b.firebaseio.com",
-      projectId: "tarefa-c987b",
-      storageBucket: "tarefa-c987b.appspot.com",
-      messagingSenderId: "1044801539130",
-      appId: "1:1044801539130:web:ba5ebce9ee6ef399df3903",
-      measurementId: "G-G3Z0W83K56"
-    };
-    // Initialize Firebase
-    firebase.initializeApp(firebaseConfig);
-
-    firebase.auth().onAuthStateChanged(function(user) {
-      console.log("cambie mi estado");
-      if (user) {
-        // User is signed in.
-        var displayName = user.displayName;
-        var email = user.email;
-        var emailVerified = user.emailVerified;
-        var photoURL = user.photoURL;
-        var isAnonymous = user.isAnonymous;
-        var uid = user.uid;
-        var providerData = user.providerData;
-        // ...
-        // User is signed out.
-        // ...
-      }
-    });
-    var paneles = firebase.database().ref("/paneles/proyecto_1");
-
-    paneles.on('value', function(snapshot){
-      console.log(snapshot.val());
-      iniciarPanelTareas();
-    });
+    
     console.log("estoy aqui");
     </script>
   <script src="../js/home.js"></script>
