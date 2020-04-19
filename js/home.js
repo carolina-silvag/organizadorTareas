@@ -1,5 +1,8 @@
+function iniciarPanelTarea() {
+
+}
+
 function crearTareaPanel() {
-  console.log('****entre y cree tarea')
   var database = firebase.database();
   var docRef = db.collection("paneles");
   var userId = firebase.auth().currentUser.uid;
@@ -35,3 +38,16 @@ function salirSesion() {
   });
 }
 
+function habilitarBoton() {
+  let titulo = $("#titulo").val();
+  let fecha_inicio = $("#fecha_inicio").val();
+  let fecha_fin = $("#fecha_fin").val();
+  let asignado = $("#asignado").val();
+  let descripcion = $("#descripcion").val();
+  if (titulo !== '' && fecha_inicio !== '' && fecha_fin !== '' && asignado !== '' && descripcion !== '') {
+    $("#crearBoton").removeClass("btn-secondary")
+    $("#crearBoton").removeAttr("disabled")
+    $("#crearBoton").addClass("btn-primary") 
+    $("#crearBoton").show()
+  }
+}

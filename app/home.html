@@ -61,19 +61,19 @@
             <form>
               <div class="form-group">
                 <label for="exampleFormControlInput1">Titulo Tarea</label>
-                <input type="titulo" class="form-control" id="inputTituloTarea" placeholder="nombre tarea">
+                <input type="titulo" class="form-control" id="titulo" placeholder="nombre tarea" onchange="habilitarBoton()">
               </div>
               <div class="form-group">
                 <label for="exampleFormControlInput1">Fecha Inicio Tarea</label>
-                <input class="form-control" type="date" id="txt_f_ini">
+                <input class="form-control" type="date" id="fecha_inicio" onchange="habilitarBoton()">
               </div>
               <div class="form-group">
                 <label for="exampleFormControlInput1">Fecha Finalización Tarea</label>
-                <input class="form-control" type="date" id="txt_f_ini">
+                <input class="form-control" type="date" id="fecha_fin" onchange="habilitarBoton()">
               </div>
               <div class="form-group">
                 <label for="exampleFormControlSelect1">Asignar Tarea</label>
-                <select class="form-control" id="exampleFormControlSelect1">
+                <select class="form-control" id="asignado" onchange="habilitarBoton()">
                   <option hidden>Seleccione</option>
                   <option>Carolina</option>
                   <option>David</option>
@@ -84,13 +84,12 @@
               </div>
               <div class="form-group">
                 <label for="exampleFormControlTextarea1">Descripción</label>
-                <textarea class="form-control" id="descripcionTarea" rows="3"></textarea>
+                <textarea class="form-control" id="descripcion" rows="3" onchange="habilitarBoton()"></textarea>
               </div>
             </form>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-            <button type="button" class="btn btn-primary" onclick="crearTareaPanel()">Crear</button>
+            <button id="crearBoton" type="button" class="btn btn-secondary" disabled onclick="crearTareaPanel()">Crear</button>
           </div>
         </div>
       </div>
@@ -160,7 +159,15 @@
         // User is signed out.
         // ...
       }
-    });</script>
+    });
+    var paneles = firebase.database().ref("/paneles/proyecto_1");
+
+    paneles.on('value', function(snapshot){
+      console.log(snapshot.val());
+      iniciarPanelTareas();
+    });
+    console.log("estoy aqui");
+    </script>
   <script src="../js/home.js"></script>
 </body>
 </html>
