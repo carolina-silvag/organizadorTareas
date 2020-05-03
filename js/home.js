@@ -33,25 +33,54 @@ var paneles = firebase.database().ref("/paneles/proyecto_1");
 
 paneles.on('value', function(snapshot){
   console.log(snapshot.val());
-  iniciarPanelTareas(snapshot);
+  iniciarPanelTareas();
+  iniciarPanelTareasEnProceso();
+  iniciarPanelTareasRelizadas();
+  agregarTareasAPaneles(snapshot);
 });
 
-
-function iniciarPanelTareas(datos) {
-  $("#crearTareaPanel").html("");
+function agregarTareasAPaneles(datos) {
   numeroTarea = datos.numChildren() + 1;
-  if(numeroTarea < 1) {
-    $('#crearTareaPanel').hide()
-  } else {
-    $('#crearTareaPanel').addClass("pizarra")
-    datos.forEach(element => {
-      crearTarjeta(element.val());
-    });
-  }
+  datos.forEach(element => {
+    crearTarjeta(element.val(), element.key);
+  });
 }
 
-function crearTarjeta(tarea) {
-  $("#crearTareaPanel").append('<div class="tarea"><p id="tituloEnTarjeta" class="tituloTarjeta"><strong>'+tarea.titulo+'</strong></p><div class="row"><div class="col-4"><p id="fechaEnTarjeta">'+tarea.fecha_inicio+'</p></div><div class="col-4"></div><div class="col-4"><div id="responsableEnTarjeta">'+tarea.asignada+'</div></div></div></div>');
+function iniciarPanelTareas() {
+  $("#crearTareaPanel").html("");
+  $('#crearTareaPanel').addClass("pizarra");
+}
+
+function iniciarPanelTareasEnProceso() {
+  $("#tareaPanelEnProceso").html("");
+  $('#tareaPanelEnProceso').addClass("pizarra")
+}
+
+function iniciarPanelTareasRelizadas() {
+  $("#tareaPanelRealizadas").html("");
+  $('#tareaPanelRealizadas').addClass("pizarra")
+}
+
+function crearTarjeta(tarea, idTarea) {
+  let idPanel = "crearTareaPanel";
+
+  if(tarea.estado == "haciendo") {
+    idPanel = "tareaPanelEnProceso";
+  }
+
+  if(tarea.estado == "hecho") {
+    idPanel = "tareaPanelRealizadas";
+  }
+
+  let tareaHtml = $('<div class="tarea col-md-6 draggable"><p id="tituloEnTarjeta" class="tituloTarjeta line-clamp"><strong>'+tarea.titulo+'</strong></p><p id="tituloEnTarjeta" class="tituloTarjeta">'+tarea.fecha_inicio+'</p><div class="row"><div class="col-6"><p id="fechaEnTarjeta"></div><div class="col-6"><div id="responsableEnTarjeta">'+tarea.asignada+'</div></div></div></div>');
+  tareaHtml.data("idTarea", idTarea);
+  $("#"+idPanel).append(tareaHtml);
+  $(".draggable").draggable({
+    appendTo: "body",
+    cursor: "move",
+    helper: 'clone',
+    revert: "invalid"
+  });
 }
 
 function crearTareaPanel() {
@@ -63,7 +92,8 @@ function crearTareaPanel() {
     descripcion: $("#descripcion").val(),
     fecha_inicio : $("#fecha_inicio").val(),
     fecha_fin: $("#fecha_fin").val(),
-    titulo: $("#titulo").val()
+    titulo: $("#titulo").val(),
+    estado: "porHacer"
   });
 
   $("#modalCrearTarea").modal('toggle');
@@ -109,3 +139,45 @@ function habilitarBoton() {
     $("#crearBoton").show()
   }
 }
+
+// Codigo para drag and drop
+function updateEstadoTarea(estado, tareaId)
+{
+  console.log("UPDATE", estado, tareaId);
+  firebase.database().ref('paneles/proyecto_1/' + tareaId).update({
+    estado: estado
+  });
+}
+
+$("#crearTareaPanel").droppable({
+  tolerance: "intersect",
+  accept: ".draggable",
+  activeClass: "ui-state-default",
+  hoverClass: "ui-state-hover",
+  drop: function(event, ui) {        
+      $(this).append($(ui.draggable));
+      updateEstadoTarea("porHacer", ui.draggable.data("idTarea"));
+  }
+});
+
+$("#tareaPanelEnProceso").droppable({
+  tolerance: "intersect",
+  accept: ".draggable",
+  activeClass: "ui-state-default",
+  hoverClass: "ui-state-hover",
+  drop: function(event, ui) {
+    console.log(ui.draggable.data("idTarea"));
+      $(this).append($(ui.draggable));
+      updateEstadoTarea("haciendo", ui.draggable.data("idTarea"));
+  }
+});
+$("#tareaPanelRealizadas").droppable({
+  tolerance: "intersect",
+  accept: ".draggable",
+  activeClass: "ui-state-default",
+  hoverClass: "ui-state-hover",
+  drop: function(event, ui) {        
+      $(this).append($(ui.draggable));
+      updateEstadoTarea("hecho", ui.draggable.data("idTarea"));
+  }
+});
