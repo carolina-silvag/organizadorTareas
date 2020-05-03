@@ -11,3 +11,14 @@ function iniciarSesion() {
   
 }
 
+function habilitarBoton() {
+  let correo = $("#user").val();
+  let password = $("#inputPassword").val();
+  let check = $("#exampleCheck1").val();
+  if (correo !== '' && password !== '' && check !== '') {
+    $("#inicioSesion").removeClass("btn-secondary")
+    $("#inicioSesion").removeAttr("disabled")
+    $("#inicioSesion").addClass("btn-primary") 
+    $("#inicioSesion").show()
+  }
+}
