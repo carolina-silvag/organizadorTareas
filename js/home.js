@@ -33,7 +33,6 @@ const paneles = firebase.database().ref("/paneles/proyecto_1");
 const usuarios = firebase.database().ref("/usuarios");
 
 paneles.on('value', function(snapshot){
-  console.log(snapshot.val());
   iniciarPanelTareas();
   iniciarPanelTareasEnProceso();
   iniciarPanelTareasRelizadas();
@@ -41,7 +40,6 @@ paneles.on('value', function(snapshot){
 });
 
 usuarios.on('value', function(snapshot) {
-  console.log(snapshot.val());
   snapshot.forEach(element => {
     //crearTarjeta(element.val(), element.key);
     let asignar = $('<option>'+element.val().nombre+'</option>');
@@ -119,6 +117,12 @@ function crearTareaPanel() {
     estado: "porHacer",
     color: $("#colorTarea").val()
   });
+  $("#asignado").val("");
+  $("#descripcion").val("");
+  $("#fecha_inicio").val("");
+  $("#fecha_fin").val("");
+  $("#titulo").val("");
+  $("#colorTarea").val("");
 
   $("#modalCrearTarea").modal('toggle');
 
@@ -154,7 +158,6 @@ function habilitarBoton() {
 // Codigo para drag and drop
 function updateEstadoTarea(estado, tareaId)
 {
-  console.log("UPDATE", estado, tareaId);
   firebase.database().ref('paneles/proyecto_1/' + tareaId).update({
     estado: estado
   });
@@ -177,11 +180,11 @@ $("#tareaPanelEnProceso").droppable({
   activeClass: "ui-state-default",
   hoverClass: "ui-state-hover",
   drop: function(event, ui) {
-    console.log(ui.draggable.data("idTarea"));
       $(this).append($(ui.draggable));
       updateEstadoTarea("haciendo", ui.draggable.data("idTarea"));
   }
 });
+
 $("#tareaPanelRealizadas").droppable({
   tolerance: "intersect",
   accept: ".draggable",
