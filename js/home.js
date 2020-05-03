@@ -29,7 +29,8 @@ firebase.auth().onAuthStateChanged(function(user) {
     // ...
   }
 });
-var paneles = firebase.database().ref("/paneles/proyecto_1");
+const paneles = firebase.database().ref("/paneles/proyecto_1");
+const usuarios = firebase.database().ref("/usuarios");
 
 paneles.on('value', function(snapshot){
   console.log(snapshot.val());
@@ -38,6 +39,15 @@ paneles.on('value', function(snapshot){
   iniciarPanelTareasRelizadas();
   agregarTareasAPaneles(snapshot);
 });
+
+usuarios.on('value', function(snapshot) {
+  console.log(snapshot.val());
+  snapshot.forEach(element => {
+    //crearTarjeta(element.val(), element.key);
+    let asignar = $('<option>'+element.val().nombre+'</option>');
+    $("#asignado").append(asignar);
+  });
+})
 
 function agregarTareasAPaneles(datos) {
   numeroTarea = datos.numChildren() + 1;
@@ -83,36 +93,32 @@ function crearTarjeta(tarea, idTarea) {
   });
 }
 
+// generar id de tarea creada
+function uuidv4() {
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+    var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+    return v.toString(16);
+  });
+}
+
 function crearTareaPanel() {
-  var database = firebase.database();
   var paneles = firebase.database();
+  var asignar = firebase.database();
   var userId = firebase.auth().currentUser.uid;
-  paneles.ref('/paneles/proyecto_1/tarea'+ numeroTarea).set({
+
+  paneles.ref('/paneles/proyecto_1/'+ uuidv4()).set({
     asignada: $("#asignado").val(),
     descripcion: $("#descripcion").val(),
     fecha_inicio : $("#fecha_inicio").val(),
     fecha_fin: $("#fecha_fin").val(),
     titulo: $("#titulo").val(),
-    estado: "porHacer"
+    estado: "porHacer",
+    color: $("#colorTarea").val()
   });
 
   $("#modalCrearTarea").modal('toggle');
 
-  
-  
-  /*db.collection("paneles").add({
-    
-    first: "Ada",
-    last: "Lovelace",
-    born: 1815
-  })
-  .then(function(docRef) {
-      console.log("Document written with ID: ", docRef.id);
-  })
-  .catch(function(error) {
-      console.error("Error adding document: ", error);
-  });*/
-  }
+}
 
 function volverDeAlerta() {
   window.location.href = "./home.html"
@@ -131,8 +137,9 @@ function habilitarBoton() {
   let fecha_inicio = $("#fecha_inicio").val();
   let fecha_fin = $("#fecha_fin").val();
   let asignado = $("#asignado").val();
+  let color = $("#colorTarea").val();
   let descripcion = $("#descripcion").val();
-  if (titulo !== '' && fecha_inicio !== '' && fecha_fin !== '' && asignado !== '' && descripcion !== '') {
+  if (titulo !== '' && fecha_inicio !== '' && fecha_fin !== '' && asignado !== '' && color !== '' && descripcion !== '') {
     $("#crearBoton").removeClass("btn-secondary")
     $("#crearBoton").removeAttr("disabled")
     $("#crearBoton").addClass("btn-primary") 
