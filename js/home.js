@@ -82,7 +82,11 @@ function crearTarjeta(tarea, idTarea) {
     idPanel = "tareaPanelRealizadas";
   }
 
-  let tareaHtml = $('<div class="tarea col-md-6 draggable"><p id="tituloEnTarjeta" class="tituloTarjeta line-clamp"><strong>'+tarea.titulo+'</strong></p><p id="tituloEnTarjeta" class="tituloTarjeta">'+tarea.fecha_inicio+'</p><div class="row"><div class="col-6"><p id="fechaEnTarjeta"></div><div class="col-6"><div id="responsableEnTarjeta">'+tarea.asignada+'</div></div></div></div>');
+  if(tarea.color == undefined) {
+    tarea.color = "Amarrillo";
+  }
+
+  let tareaHtml = $('<div class="tarea_'+tarea.color+' col-md-6 draggable"><p id="tituloEnTarjeta" class="tituloTarjeta line-clamp"><strong>'+tarea.titulo+'</strong></p><p id="tituloEnTarjeta" class="tituloTarjeta">'+tarea.fecha_inicio+'</p><div class="row"><div class="col-6"><p id="fechaEnTarjeta"></div><div class="col-6"><div id="responsableEnTarjeta">'+tarea.asignada+'</div></div></div></div>');
   tareaHtml.data("idTarea", idTarea);
   $("#"+idPanel).append(tareaHtml);
   $(".draggable").draggable({

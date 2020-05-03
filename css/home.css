@@ -24,14 +24,51 @@ body {
     margin: 20px
 }
 
-.tarea {
+.tarea_Azul {
     z-index: 1;
     width: 100%;
     height: 185px;
-    background: url('../assets/img/posit-amarrillo.png') no-repeat center center;
+    background: url('../assets/img/posit-azul.jpg') no-repeat center center;
     background-size:100% 100%;
-    padding: 8% 5% 5% 5%;
+    padding: 8% 6% 6% 6%;
     display: inline-block;
+}
+
+.tarea_Amarrillo {
+  z-index: 1;
+  width: 100%;
+  height: 185px;
+  background: url('../assets/img/posit-amarrillo.png') no-repeat center center;
+  background-size:100% 100%;
+  padding: 8% 6% 6% 6%;
+  display: inline-block;
+}
+.tarea_Verde {
+  z-index: 1;
+  width: 100%;
+  height: 185px;
+  background: url('../assets/img/posit-verde.png') no-repeat center center;
+  background-size:100% 100%;
+  padding: 8% 6% 6% 6%;
+  display: inline-block;
+}
+.tarea_Naranjo {
+  z-index: 1;
+  width: 100%;
+  height: 185px;
+  background: url('../assets/img/posit-naranjo.png') no-repeat center center;
+  background-size:100% 100%;
+  padding: 8% 6% 6% 6%;
+  display: inline-block;
+}
+.tarea_Rosa {
+  z-index: 1;
+  width: 100%;
+  height: 185px;
+  background: url('../assets/img/posit-rosa.png') no-repeat center center;
+  background-size:100% 100%;
+  padding: 8% 6% 6% 6%;
+  display: inline-block;
 }
 
 .tituloTarjeta {
@@ -44,4 +81,21 @@ body {
 }
 .modal-open {
   padding-right: 0px !important;
+}
+
+/*seleccion de color*/
+.amarrilloTarea {
+  background-color: yellow;
+}
+.verdeTarea {
+  background-color: yellowgreen;
+}
+.naranjoTarea {
+  background-color: orange;
+}
+.rosaTarea {
+  background-color: palevioletred;
+}
+.azulTarea {
+  background-color: cornflowerblue;
 }
