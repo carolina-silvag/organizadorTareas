@@ -6,7 +6,13 @@ function iniciarSesion() {
   firebase.auth().signInWithEmailAndPassword(email, password).then(function(result) {
     window.location.href = "./app/home.html"
   }).catch(function(error) {
-    
+    $("#user").val("");
+    $("#inputPassword").val("");
+    Swal.fire({
+      icon: 'error',
+      title: 'Oops...',
+      text: 'Tu correo o contraseña es incorrecta! Vuelve a ingresar tus datos'
+    });
   });
   
 }
