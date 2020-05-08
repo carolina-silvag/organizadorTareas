@@ -39,6 +39,7 @@ paneles.on('value', function(snapshot){
 // Buscar Usuarios en Firebase
 const usuarios = firebase.database().ref("/usuarios");
 usuarios.on('value', function(snapshot) {
+  $("#asignado").find('option').remove().end();
   snapshot.forEach(element => {
     let asignar = $('<option>'+element.val().nombre+'</option>');
     $("#asignado").append(asignar);
